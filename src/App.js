@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import Toolbar from './components/UI/Toolbar/Toolbar';
+import Posts from './components/Posts/Posts';
 
 class App extends Component {
+  state = {
+    posts: [],
+    searchField: ''
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/posts/1/comments')
+      .then(resp => resp.json())
+      .then(data => {
+        const posts = data.slice(0, 20);
+        this.setState({ posts: posts });
+      });
+  }
+
+  onChangeHandler = (event) => {
+    this.setState({ searchField: event.target.value });
+  }
+
   render() {
+    const filteredPosts = this.state.posts.filter(post => {
+      return post.name.toLowerCase().includes(this.state.searchField.toLowerCase());
+    });
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Toolbar changed={this.onChangeHandler} />
+        <Posts posts={filteredPosts} />
       </div>
     );
   }

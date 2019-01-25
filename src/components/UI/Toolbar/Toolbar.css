@@ -1,0 +1,21 @@
+.Toolbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #00ff15;
+    border-bottom: 3px solid #27ae60;
+} 
+
+.Toolbar img {
+    width: 50px;
+}
+
+.Input {
+    width: 25%;
+}
+
+.Toolbar input {
+    width: 100%;
+    padding: .5rem;
+    box-sizing: border-box;
+}
